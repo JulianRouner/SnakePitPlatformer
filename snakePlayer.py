@@ -10,11 +10,18 @@ def clip(val, minval, maxval):
 
 
 class Player:
-    def __init__(xSpeed, ySpeed):
-        self.xSpeed = xSpeed
-        self.ySpeed = ySpeed
-    def 
-
+    def __init__(self, speedArray):
+        self.speedArray = speedArray
+    def keyMap(self):
+        if rounerKey[pygame.K_RIGHT]:   #Keymap
+            self.speedArray[0] = 5
+        if rounerKey[pygame.K_LEFT]:
+            self.speedArray[0] = -5
+        if rounerKey[pygame.K_UP] and ballrect.bottom == height:
+            self.speedArray[1] = -10
+        if rounerKey[pygame.K_DOWN]:
+            self.speedArray[1] = 5
+        return self.speedArray
 
 while 1:
     for event in pygame.event.get():
