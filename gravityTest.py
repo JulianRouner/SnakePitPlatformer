@@ -7,9 +7,13 @@ pygame.font.init()
 
 size = width, height = 1279, 742
 speed = [0, 0]
-speedCoeff = 5
 black = 0, 0, 0
-gravity = 0.2
+
+thrust = 5
+lift = 10
+gravity = 0.5
+friction = 0.5
+
 
 screen = pygame.display.set_mode(size)
 
@@ -18,7 +22,7 @@ backdrop = pygame.transform.scale(backdrop, (width, height))
 backRect = backdrop.get_rect()
 
 ball = pygame.image.load("claudius.png")
-ball = pygame.transform.scale(ball, (228, 322))
+ball = pygame.transform.scale(ball, (114, 161))
 ballrect = ball.get_rect()
 
 def clip(val, minval, maxval):
@@ -34,14 +38,14 @@ while 1:
     rounerKey = pygame.key.get_pressed()
 
     if rounerKey[pygame.K_RIGHT]:   #Keymap
-        speed[0] = speedCoeff
+        speed[0] = thrust
     if rounerKey[pygame.K_LEFT]:
-        speed[0] = -speedCoeff
+        speed[0] = -thrust
     if rounerKey[pygame.K_UP] and ballrect.bottom == height:
-        speed[1] = -speedCoeff * 2
+        speed[1] = -lift * 2
     if rounerKey[pygame.K_DOWN]:
-        speed[1] = speedCoeff
-
+        speed[1] = lift
+        
     ballrect = ballrect.move(speed)
 
     """if ballrect.left < 0 or ballrect.right > width:
@@ -49,6 +53,7 @@ while 1:
     if ballrect.top < 0 or ballrect.bottom > height:
         speed[1] = -speed[1]
     """
+
     if ballrect.right > width:
         ballrect.right = width
     if ballrect.left < 0:
@@ -64,9 +69,11 @@ while 1:
     ballrect.top = clip(ballrect.top, 0, height)
     ballrect.bottom = clip(ballrect.bottom, 0, height) 
 
-    if ballrect.bottom == height:
-        speed[0] = 0
-
+    if ballrect.bottom == height and speed[0] != 0: #friction mechanic
+        if speed[0] >= 0:
+            speed[0] -= friction
+        elif speed[0] <= 0:
+            speed[0] += friction
     screen.fill(black)
     screen.blit(backdrop, backRect)
     screen.blit(ball, ballrect)
