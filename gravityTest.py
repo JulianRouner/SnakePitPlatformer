@@ -1,9 +1,13 @@
+import pygame
 import os
-import sys, pygame
-pygame.init()
+import sys
+
+pygame.font.init()
+#pygame.init()
 
 size = width, height = 1279, 742
 speed = [0, 0]
+speedCoeff = 5
 black = 0, 0, 0
 gravity = 0.2
 
@@ -30,13 +34,13 @@ while 1:
     rounerKey = pygame.key.get_pressed()
 
     if rounerKey[pygame.K_RIGHT]:   #Keymap
-        speed[0] = 5
+        speed[0] = speedCoeff
     if rounerKey[pygame.K_LEFT]:
-        speed[0] = -5
+        speed[0] = -speedCoeff
     if rounerKey[pygame.K_UP] and ballrect.bottom == height:
-        speed[1] = -10
+        speed[1] = -speedCoeff * 2
     if rounerKey[pygame.K_DOWN]:
-        speed[1] = 5
+        speed[1] = speedCoeff
 
     ballrect = ballrect.move(speed)
 
