@@ -5,7 +5,7 @@ import sys
 pygame.font.init()
 #pygame.init()
 
-size = width, height = 1279, 742
+size = width, height = 1280, 720
 speed = [0, 0]
 black = 0, 0, 0
 
@@ -14,19 +14,18 @@ lift = 10
 gravity = 0.5
 friction = 0.5
 
-
-screen = pygame.display.set_mode(size)
-
 backdrop = pygame.image.load("background.jpg")
-backdrop = pygame.transform.scale(backdrop, (width, height))
+backdrop = pygame.transform.smoothscale(backdrop, (width, height))
 backRect = backdrop.get_rect()
 
 ball = pygame.image.load("claudius.png")
-ball = pygame.transform.scale(ball, (114, 161))
+ball = pygame.transform.scale(ball, (171, 242))
 ballrect = ball.get_rect()
 
 def clip(val, minval, maxval):
     return min(max(val, minval), maxval)
+
+screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
 
 while 1:
     for event in pygame.event.get():
@@ -74,6 +73,7 @@ while 1:
             speed[0] -= friction
         elif speed[0] <= 0:
             speed[0] += friction
+    
     screen.fill(black)
     screen.blit(backdrop, backRect)
     screen.blit(ball, ballrect)
